@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balsam's Birthday Gift 🐨🎂✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to top right, #ffdee9, #b5fffc);
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      padding: 20px;
+      transition: background 1s ease;
+    }
+
+    body.celebration {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+
+    h1 {
+      font-size: clamp(1.8em, 8vw, 3.5em);
+      color: #ff69b4;
+      text-shadow: 2px 2px #fff;
+      animation: pop 1.5s infinite alternate;
+      margin: 10px 0;
+      padding: 0 10px;
+    }
+
+    h2 {
+      font-size: clamp(0.9em, 4vw, 1.5em);
+      color: #444;
+      margin: 10px 0;
+      max-width: 95%;
+      padding: 0 10px;
+      line-height: 1.4;
+    }
+
+    .message {
+      font-size: clamp(1.5em, 6vw, 3em);
+      color: #fff;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: scale(0.5) rotate(-10deg);
+      transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    /* Floating balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: clamp(40px, 8vw, 50px);
+      height: clamp(56px, 11.2vw, 70px);
+      background: pink;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: floatUp 8s infinite ease-in;
+    }
+    .balloon::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: clamp(30px, 6vw, 40px);
+      background: #555;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      50% { transform: translateY(-40vh) rotate(10deg); opacity: 1; }
+      100% { transform: translateY(-80vh) rotate(-10deg); opacity: 0; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ff69b4;
+      animation: fall 5s infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Gift button */
+    .gift {
+      margin-top: 20px;
+      font-size: clamp(2.5em, 10vw, 3em);
+      cursor: pointer;
+      animation: wiggle 1s infinite;
+      transition: transform 0.3s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(8deg); }
+      75% { transform: rotate(-8deg); }
+    }
+
+    .gift.opened {
+      animation: spinOut 0.8s ease-out forwards;
+    }
+
+    @keyframes spinOut {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.5); }
+      100% { transform: rotate(360deg) scale(1.2); }
+    }
+
+    /* Open me text */
+    .open-text {
+      margin-top: 10px;
+      font-size: clamp(1.2em, 5vw, 1.8em);
+      color: #ff1493;
+      font-weight: bold;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Music button in top left */
+    .music-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 1000;
+    }
+
+    .music-icon {
+      font-size: clamp(2em, 8vw, 3em);
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .play-text {
+      font-size: clamp(0.9em, 3.5vw, 1.2em);
+      color: #ff1493;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Music button -->
+  <div class="music-button" id="musicButton">
+    <div class="music-icon">🎵</div>
+    <div class="play-text" id="playText">Play me!</div>
+  </div>
+
+  <h1>🎉 Happy Birthday Koala 🎉</h1>
+  <h2>Wishing u all the happiness, joy and success in the world, u deserve it all miss saghrouna 💖</h2>
+
+  <!-- Gift button for music -->
+  <div class="gift" id="gift">🎁</div>
+  <div class="open-text" id="openText">Open Me!!</div>
+
+  <!-- Celebration message (hidden initially) -->
+  <div class="message" id="message">✨ 😜 Enjoy Your Day! 💖 ✨</div>
+
+  <!-- Balloons -->
+  <div class="balloon" style="left: 10%; background: #ff69b4;"></div>
+  <div class="balloon" style="left: 30%; background: #87cefa;"></div>
+  <div class="balloon" style="left: 50%; background: #ffa500;"></div>
+  <div class="balloon" style="left: 70%; background: #98fb98;"></div>
+  <div class="balloon" style="left: 90%; background: #dda0dd;"></div>
+
+  <!-- Confetti (auto generate with JS) -->
+  <script>
+    // Generate confetti
+    for (let i = 0; i < 60; i++) {
+      let conf = document.createElement("div");
+      conf.classList.add("confetti");
+      conf.style.left = Math.random() * 100 + "%";
+      conf.style.background = ["#ff69b4","#ffa500","#87cefa","#98fb98","#dda0dd"][Math.floor(Math.random()*5)];
+      conf.style.animationDuration = (3 + Math.random() * 3) + "s";
+      conf.style.animationDelay = Math.random() * 2 + "s";
+      document.body.appendChild(conf);
+    }
+
+    // Music setup
+    let birthdayMusic = new Audio("birthday.mp3");
+    birthdayMusic.loop = true;
+    
+    let celebrationMusic = new Audio("1004.mp3");
+    celebrationMusic.loop = false;
+
+    let birthdayMusicPlaying = false;
+
+    // Music button click
+    document.getElementById("musicButton").addEventListener("click", function() {
+      let playText = document.getElementById("playText");
+      
+      if (!birthdayMusicPlaying) {
+        birthdayMusic.play().catch(err => {
+          console.log("Birthday music play failed:", err);
+        });
+        birthdayMusicPlaying = true;
+        playText.textContent = "Stop me!";
+      } else {
+        birthdayMusic.pause();
+        birthdayMusicPlaying = false;
+        playText.textContent = "Play me!";
+      }
+    });
+
+    // Gift button click
+    let clicked = false;
+    let giftElement = document.getElementById("gift");
+    
+    giftElement.addEventListener("click", function() {
+      if (clicked) {
+        // If already opened (showing 🎉), refresh the page
+        location.reload();
+        return;
+      }
+      
+      clicked = true;
+      
+      // Stop birthday music if playing
+      if (birthdayMusicPlaying) {
+        birthdayMusic.pause();
+        birthdayMusic.currentTime = 0;
+        birthdayMusicPlaying = false;
+      }
+      
+      // Hide music button
+      document.getElementById("musicButton").style.display = "none";
+      
+      // Play celebration music once
+      celebrationMusic.play().catch(err => {
+        console.log("Celebration music play failed:", err);
+      });
+      
+      // Transform gift
+      this.classList.add("opened");
+      this.innerText = "🎉";
+
+      // Remove "Open Me!!" text
+      document.getElementById("openText").style.display = "none";
+      
+      // Change background
+      document.body.classList.add("celebration");
+      
+      // Show message after a delay
+      setTimeout(() => {
+        document.getElementById("message").classList.add("show");
+      }, 500);
+    });
+  </script>
+</body>
+</html>
